@@ -1,10 +1,18 @@
 {
   "name": "hoverer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "make text appear on hover",
   "main": "hoverer.js",
   "scripts": {},
   "author": "Daniel F.H.",
   "license": "ISC",
-  "keywords": []
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielFHcode/hoverer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/danielFHcode/hoverer/issues"
+  },
+  "homepage": "https://github.com/danielFHcode/hoverer#readme"
 }
