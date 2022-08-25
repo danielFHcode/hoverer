@@ -70,6 +70,6 @@ To apply the hoverer effect to an element you can use one of 2 methods:
 
 ## What's New In version `1.2.x`?
 
-In this release a delay of 0.5s was added to match hoe the effect traditionally works in other programs.
+In this release a delay of 0.5s was added to match how the effect traditionally works in other programs.
 
 For those looking for the removal of the delay, a `data-hoverer-options` attribute is being worked on, but for now you can just use version `1.0.3`.
