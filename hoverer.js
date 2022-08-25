@@ -2,12 +2,17 @@
  * Shows text box on hover
  * @param {HTMLElement} element - The element which has hoverer applied to it.
  * @param {string} text - The text that appears in the text box.
+ * @param {object} options - options for the behavior and look of hoverer
+ * @param {number} [options.delay] - The amount of secondes between when the mouse hovers over the element and when the text box appears.
+ * @param {number} transition - The time it take to transition between it's visible and invisible states.
  */
-function applyHoverer(element,text){
-    /**
-     * Creating the text box
-     * @type {HTMLSpanElement}
-     */
+ function applyHoverer(
+    element,
+    text,
+    {
+        delay = 500,
+        transition = 0
+    }){
     const textElement = document.createElement('span');
     textElement.ariaHidden = true;
     textElement.innerText = text;
@@ -19,11 +24,9 @@ function applyHoverer(element,text){
     'padding: 0.45em;'+
     'font-family: sans-serif;'+
     'font-size: 0.8em;'
+    'transition: all '+transition+'s;'
     document.body.appendChild(textElement);
 
-    /*
-     * Showing text box when mouse hovers over element.
-     */
     let isMouseOver = false;
     element.addEventListener('mouseover',function(e){
         if (isMouseOver) return;
@@ -34,7 +37,7 @@ function applyHoverer(element,text){
             textElement.style.left = elementTrans.x+'px';
             textElement.style.top = elementTrans.y+'px';
             textElement.style.opacity = 1;
-        },500)
+        }, delay*1000)
     })
     element.addEventListener('mouseleave',function(){
         isMouseOver = false;
@@ -44,7 +47,6 @@ function applyHoverer(element,text){
     /**
      * Get element transforms
      * @param {HTMLElement} element 
-     * @return {{x:number,y:number}}
      */
     function getTextBoxTrans(element){
         const boundingClientRect = element.getBoundingClientRect();
@@ -56,25 +58,16 @@ function applyHoverer(element,text){
 }
 
 (function(){
-    /*
-     * Applying hoverer to all element with `data-hoverer-text` attribute
-     */
     const hovererTextElements = document.querySelectorAll('[data-hoverer-text]');
     for (let i = 0; i < hovererTextElements.length; i++) {
         const hovererTextElement = hovererTextElements[i];
         applyHoverer(hovererTextElement,hovererTextElement.getAttribute('data-hoverer-text'));
     }
-    /*
-     * Selecting all element with `data-hoverer-infer` attribute
-     */
     const hovererInferElements = document.querySelectorAll('[data-hoverer-infer]');
     for (let i = 0; i < hovererInferElements.length; i++) {
         const hovererInferElement = hovererInferElements[i];
         const hovererInferValue = hovererInferElement.getAttribute('data-hoverer-infer');
         if (hovererInferValue == 'auto') {
-            /*
-             * Automatically choosing property to infer and applying hoverer with it
-             */
             if (hovererInferElement.tagName == 'IMG'||hovererInferElement.tagName == 'VIDEO') {
                 applyHoverer(
                     hovererInferElement,
@@ -101,9 +94,6 @@ function applyHoverer(element,text){
             }
         }
         else {
-            /*
-             * Apply hoverer with inferred property  
-             */
             applyHoverer(
                 hovererInferElement,
                 hovererInferElement[hovererInferValue]
