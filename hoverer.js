@@ -9,8 +9,6 @@ function applyHoverer(element,text){
     textElement.innerText = text;
     textElement.style = ''+
     'position:absolute;'+
-    'left:'+getTextBoxTrans(element).x+'px;'+
-    'top:'+getTextBoxTrans(element).y+'px;'+
     'opacity:0;'+
     'background:white;'+
     'border: 0.1em solid grey;'+
@@ -58,6 +56,7 @@ function applyHoverer(element,text){
                     hovererInferElement,
                     hovererInferElement.alt||
                     hovererInferElement.src||
+                    hovererInferElement.ariaLabel||
                     hovererInferElement.innerText
                 );
             }
@@ -65,12 +64,14 @@ function applyHoverer(element,text){
                 applyHoverer(
                     hovererInferElement,
                     hovererInferElement.href||
+                    hovererInferElement.ariaLabel||
                     hovererInferElement.innerText
                 );
             }
             else {
                 applyHoverer(
                     hovererInferElement,
+                    hovererInferElement.ariaLabel||
                     hovererInferElement.innerText
                 );
             }
