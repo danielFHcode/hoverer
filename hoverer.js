@@ -15,15 +15,22 @@ function applyHoverer(element,text){
     'padding: 0.45em;'+
     'font-family: sans-serif;'+
     'font-size: 0.8em;'
-
     document.body.appendChild(textElement);
+
+    let isMouseOver = false;
     element.addEventListener('mouseover',function(e){
-        const elementTrans = getTextBoxTrans(element);
-        textElement.style.left = elementTrans.x+'px';
-        textElement.style.top = elementTrans.y+'px';
-        textElement.style.opacity = 1;
+        if (isMouseOver) return;
+        isMouseOver = true;
+        setTimeout(function(){
+            if (!isMouseOver) return;
+            const elementTrans = getTextBoxTrans(element);
+            textElement.style.left = elementTrans.x+'px';
+            textElement.style.top = elementTrans.y+'px';
+            textElement.style.opacity = 1;
+        },500)
     })
     element.addEventListener('mouseleave',function(){
+        isMouseOver = false;
         textElement.style.opacity = 0;
     })
 

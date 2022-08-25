@@ -1,6 +1,6 @@
 {
   "name": "hoverer",
-  "version": "1.0.3",
+  "version": "1.2.0",
   "description": "make text appear on hover",
   "main": "hoverer.js",
   "scripts": {},
