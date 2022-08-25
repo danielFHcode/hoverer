@@ -1,12 +1,12 @@
 {
   "name": "hoverer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "make text appear on hover",
   "main": "hoverer.js",
   "scripts": {},
   "author": "Daniel F.H.",
   "license": "ISC",
-  "keywords": [],
+  "keywords": ["hover","text box"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/danielFHcode/hoverer.git"
