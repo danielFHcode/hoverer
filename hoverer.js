@@ -1,61 +1,84 @@
-/**
- * Shows text box on hover
- * @param {HTMLElement} element - The element which has hoverer applied to it.
- * @param {string} text - The text that appears in the text box.
- * @param {object} options - options for the behavior and look of hoverer
- * @param {number} [options.delay] - The amount of secondes between when the mouse hovers over the element and when the text box appears.
- * @param {number} transition - The time it take to transition between it's visible and invisible states.
- */
- function applyHoverer(
-    element,
-    text,
-    {
-        delay = 500,
-        transition = 0
-    }){
-    const textElement = document.createElement('span');
-    textElement.ariaHidden = true;
-    textElement.innerText = text;
-    textElement.style = ''+
-    'position:absolute;'+
-    'opacity:0;'+
-    'background:white;'+
-    'border: 0.1em solid grey;'+
-    'padding: 0.45em;'+
-    'font-family: sans-serif;'+
-    'font-size: 0.8em;'
-    'transition: all '+transition+'s;'
-    document.body.appendChild(textElement);
-
-    let isMouseOver = false;
-    element.addEventListener('mouseover',function(e){
-        if (isMouseOver) return;
-        isMouseOver = true;
-        setTimeout(function(){
-            if (!isMouseOver) return;
-            const elementTrans = getTextBoxTrans(element);
-            textElement.style.left = elementTrans.x+'px';
-            textElement.style.top = elementTrans.y+'px';
-            textElement.style.opacity = 1;
-        }, delay*1000)
-    })
-    element.addEventListener('mouseleave',function(){
-        isMouseOver = false;
-        textElement.style.opacity = 0;
-    })
+const {applyHoverer,setHovererGlobalOptions} = (function(){
+    /**
+     * @typedef {Object} options - options for the behavior and look of hoverer.
+     * @property {number} [delay] - The amount of secondes between when the mouse hovers over the element and when the text box appears.
+     * @property {number} [transition] - The time it take to transition between it's visible and invisible states.
+     */
+    /**
+     * @type {options}
+     */
+    const defaultOptions = {
+        delay:0.5,
+        transition:0
+    };
 
     /**
-     * Get element transforms
-     * @param {HTMLElement} element 
+     * Sets the default options for hoverer.
+     * @param {options} options - options for the behavior and look of hoverer.
      */
-    function getTextBoxTrans(element){
-        const boundingClientRect = element.getBoundingClientRect();
-        return {
-            x:boundingClientRect.left+window.scrollX,
-            y:boundingClientRect.bottom+window.scrollY+5
+    function setHovererGlobalOptions(options){
+        for (let i in options){
+            if (defaultOptions[i]==null) continue;
+            defaultOptions[i] = options[i];
         }
     }
-}
+
+    /**
+     * Shows text box on hover
+     * @param {HTMLElement} element - The element which has hoverer applied to it.
+     * @param {string} text - The text that appears in the text box.
+     * @param {defaultOptions} options - options for the behavior and look of hoverer.
+     */
+    function applyHoverer(
+        element,
+        text,
+        options = defaultOptions
+    ){
+        const textElement = document.createElement('span');
+        textElement.ariaHidden = true;
+        textElement.innerText = text;
+        textElement.style = ''+
+        'position:absolute;'+
+        'opacity:0;'+
+        'background:white;'+
+        'border: 0.1em solid grey;'+
+        'padding: 0.45em;'+
+        'font-family: sans-serif;'+
+        'font-size: 0.8em;'
+        'transition: all '+(options.transition||defaultOptions.transition)+'s;'
+        document.body.appendChild(textElement);
+    
+        let isMouseOver = false;
+        element.addEventListener('mouseover',function(e){
+            if (isMouseOver) return;
+            isMouseOver = true;
+            setTimeout(function(){
+                if (!isMouseOver) return;
+                const elementTrans = getTextBoxTrans(element);
+                textElement.style.left = elementTrans.x+'px';
+                textElement.style.top = elementTrans.y+'px';
+                textElement.style.opacity = 1;
+            }, (options.delay||defaultOptions.delay)*1000)
+        })
+        element.addEventListener('mouseleave',function(){
+            isMouseOver = false;
+            textElement.style.opacity = 0;
+        })
+    
+        /**
+         * Get element transforms
+         * @param {HTMLElement} element 
+         */
+        function getTextBoxTrans(element){
+            const boundingClientRect = element.getBoundingClientRect();
+            return {
+                x:boundingClientRect.left+window.scrollX,
+                y:boundingClientRect.bottom+window.scrollY+5
+            }
+        }
+    }
+    return {applyHoverer,setHovererGlobalOptions};
+ })();
 
 (function(){
     const hovererTextElements = document.querySelectorAll('[data-hoverer-text]');
@@ -100,4 +123,4 @@
             );
         }
     }
-})()
+})();
