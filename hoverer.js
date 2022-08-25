@@ -9,7 +9,7 @@ function applyHoverer(element,text){
      * @type {HTMLSpanElement}
      */
     const textElement = document.createElement('span');
-    textElement.ariaHidden = true;
+    textElement.ariaHidden = textElement.hidden = true;
     textElement.innerText = text;
     textElement.style = ''+
     'position:absolute;'+
@@ -18,7 +18,7 @@ function applyHoverer(element,text){
     'border: 0.1em solid grey;'+
     'padding: 0.45em;'+
     'font-family: sans-serif;'+
-    'font-size: 0.8em;'
+    'font-size: 0.7em;'
     document.body.appendChild(textElement);
 
     /*
@@ -30,15 +30,20 @@ function applyHoverer(element,text){
         isMouseOver = true;
         setTimeout(function(){
             if (!isMouseOver) return;
-            const elementTrans = getTextBoxTrans(element);
+            const elementTrans = {
+                x:e.clientX,
+                y:e.clientY
+            };
+            textElement.hidden = false;
             textElement.style.left = elementTrans.x+'px';
             textElement.style.top = elementTrans.y+'px';
             textElement.style.opacity = 1;
         },500)
     })
     element.addEventListener('mouseleave',function(){
-        isMouseOver = false;
         textElement.style.opacity = 0;
+        textElement.hidden = true;
+        isMouseOver = false;
     })
 
     /**

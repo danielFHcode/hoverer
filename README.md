@@ -68,8 +68,14 @@ To apply the hoverer effect to an element you can use one of 2 methods:
       <!-- Results in a text box which displays the content of the 'href' property of the `a` element ('an image') and shows up when the mouse hovers over the img element. -->
       ```
 
-## What's New In version `1.2.x`?
+## What's New In version `1.3.x`?
 
-In this release a delay of 0.5s was added to match how the effect traditionally works in other programs.
+In this release a couple of modifications where made to the size and positioning of the text box to match how the effect traditionally works in other programs.
 
-For those looking for the removal of the delay, a `data-hoverer-options` attribute is being worked on, but for now you can just use version `1.0.3`.
+For those who don't like the changes, do know that we are working on a `data-hoverer-options` data attribute and respective js function, which you can try out by downloading the file from the [data-hoverer-options branch](https://github.com/danielFHcode/hoverer/tree/data-hoverer-options) on github. Do note that the branch is still in alpha, so it may lack some features and it won't be well documented.
+
+Otherwise you can just download an older version of the package:
+
+```console
+npm i hoverer@1.2.2
+```
