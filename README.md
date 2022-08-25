@@ -11,7 +11,6 @@ Hoverer is a library for creating a text box which displays additional informati
 To install you can either use npm:
 
 ```console
-foo@bar:~$ whoami
 npm i hoverer
 ```
 
