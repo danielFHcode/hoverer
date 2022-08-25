@@ -33,7 +33,7 @@ To apply the hoverer effect to an element you can use one of 2 methods:
    ```js
    applyHoverer(myElement, "some text");
 
-   // Results in a text box saying 'some text' that shows up when the mouse hovers on `myElement`.
+   // Results in a text box saying 'some text' that shows up when the mouse hovers over `myElement`.
    ```
 
    With this function you can set a specific pice of text that will show up on hover.
@@ -45,7 +45,7 @@ To apply the hoverer effect to an element you can use one of 2 methods:
       ```html
       <p data-hoverer-text="some text">pice of text</p>
 
-      <!-- Results in a text box saying 'some text' that shows up when the mouse hovers on the p element. -->
+      <!-- Results in a text box saying 'some text' that shows up when the mouse hovers over the p element. -->
       ```
 
       With this attribute you can set a specific pice of text that will show up on hover.
@@ -55,7 +55,7 @@ To apply the hoverer effect to an element you can use one of 2 methods:
       ```html
       <img src="someImage.png" alt="an image" data-hoverer-infer="alt" />
 
-      <!-- Results in a text box which displays the content of the 'alt' property of the img element ('an image') and shows up when the mouse hovers on the img element. -->
+      <!-- Results in a text box which displays the content of the 'alt' property of the img element ('an image') and shows up when the mouse hovers over the img element. -->
       ```
 
       With this attribute you can make hoverer display a pice of text that is based on one of the element's properties that will show up on hover.
