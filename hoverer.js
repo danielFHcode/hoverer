@@ -1,15 +1,19 @@
 const {applyHoverer,setHovererGlobalOptions} = (function(){
     /**
      * @typedef {Object} options - options for the behavior and look of hoverer.
+     * @property {number} [size] - The size of the text box.
      * @property {number} [delay] - The amount of secondes between when the mouse hovers over the element and when the text box appears.
      * @property {number} [transition] - The time it take to transition between it's visible and invisible states.
+     * @property {string} [style] - A string containing css styles that will be applied to the text box.
      */
     /**
      * @type {options}
      */
     const defaultOptions = {
+        size:0.7,
         delay:0.5,
-        transition:0
+        transition:0,
+        style:''
     };
 
     /**
@@ -44,8 +48,9 @@ const {applyHoverer,setHovererGlobalOptions} = (function(){
         'border: 0.1em solid grey;'+
         'padding: 0.45em;'+
         'font-family: sans-serif;'+
-        'font-size: 0.8em;'
-        'transition: all '+(options.transition||defaultOptions.transition)+'s;'
+        'font-size: '+(options.size||defaultOptions.size)+'em;'+
+        'transition: all '+(options.transition||defaultOptions.transition)+'s;';
+        textElement.style += options.style||defaultOptions.style;
         document.body.appendChild(textElement);
     
         let isMouseOver = false;

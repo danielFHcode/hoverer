@@ -68,7 +68,7 @@ To apply the hoverer effect to an element you can use one of 2 methods:
       <!-- Results in a text box which displays the content of the 'href' property of the `a` element ('an image') and shows up when the mouse hovers over the img element. -->
       ```
 
-## What's New In version `2.x.x`?
+## What's New In version `2.x`?
 
 In this release we have finally started to introduce some customization options!
 
@@ -98,4 +98,4 @@ setHovererGlobalOptions({
 
 For more details you can check out the [Usage](#usage) section.
 
-We do understand that some people may prefer to use older versions without the customization options to reduce unneeded bundle size, and because of that we want to make it clear that we will still be updating versions `1.x.x`.
+We do understand that some people may prefer to use older versions without the customization options to reduce unneeded bundle size, and because of that we want to make it clear that we will still be updating versions `1.x`.
