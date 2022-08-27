@@ -31,7 +31,7 @@ const {applyHoverer,setHovererGlobalOptions} = (function(){
      * Shows text box on hover
      * @param {HTMLElement} element - The element which has hoverer applied to it.
      * @param {string} text - The text that appears in the text box.
-     * @param {defaultOptions} options - options for the behavior and look of hoverer.
+     * @param {options} options - options for the behavior and look of hoverer.
      */
     function applyHoverer(
         element,
@@ -40,6 +40,7 @@ const {applyHoverer,setHovererGlobalOptions} = (function(){
     ){
         const textElement = document.createElement('span');
         textElement.ariaHidden = true;
+        textElement.hidden = true;
         textElement.innerText = text;
         textElement.style = ''+
         'position:absolute;'+
@@ -49,13 +50,14 @@ const {applyHoverer,setHovererGlobalOptions} = (function(){
         'padding: 0.45em;'+
         'font-family: sans-serif;'+
         'font-size: '+(options.size||defaultOptions.size)+'em;'+
-        'transition: all '+(options.transition||defaultOptions.transition)+'s;';
-        textElement.style += options.style||defaultOptions.style;
+        'transition: all '+oneLineIf(options.transition!=undefined,options.transition,defaultOptions.transition)+'s;'+
+        (options.style||defaultOptions.style);
         document.body.appendChild(textElement);
     
         let isMouseOver = false;
         element.addEventListener('mouseover',function(e){
             if (isMouseOver) return;
+            textElement.hidden = false;
             isMouseOver = true;
             setTimeout(function(){
                 if (!isMouseOver) return;
@@ -63,11 +65,23 @@ const {applyHoverer,setHovererGlobalOptions} = (function(){
                 textElement.style.left = elementTrans.x+'px';
                 textElement.style.top = elementTrans.y+'px';
                 textElement.style.opacity = 1;
-            }, (options.delay||defaultOptions.delay)*1000)
+            }, oneLineIf(
+                options.delay!=undefined,
+                options.delay,
+                defaultOptions.delay
+            )*1000);
         })
         element.addEventListener('mouseleave',function(){
-            isMouseOver = false;
             textElement.style.opacity = 0;
+            setTimeout(function(){
+                if (isMouseOver) return;
+                textElement.hidden = true;
+            }, oneLineIf(
+                options.transition!=undefined,
+                options.transition,
+                defaultOptions.transition
+            )*1000)
+            isMouseOver = false;
         })
     
         /**
@@ -81,20 +95,43 @@ const {applyHoverer,setHovererGlobalOptions} = (function(){
                 y:boundingClientRect.bottom+window.scrollY+5
             }
         }
+
+        function oneLineIf(bool,x,y){
+            if (bool) return x;
+            return y;
+        }
     }
     return {applyHoverer,setHovererGlobalOptions};
  })();
 
-(function(){
+window.addEventListener('load',
+function(){
+    const hovererGlobalOptions = document.querySelector('[data-hoverer-global-options]');
+    if (hovererGlobalOptions) {
+        setHovererGlobalOptions(
+            JSON.parse(
+                hovererGlobalOptions.getAttribute('data-hoverer-global-options')
+            )
+        )
+    }
+
     const hovererTextElements = document.querySelectorAll('[data-hoverer-text]');
     for (let i = 0; i < hovererTextElements.length; i++) {
         const hovererTextElement = hovererTextElements[i];
-        applyHoverer(hovererTextElement,hovererTextElement.getAttribute('data-hoverer-text'));
+        applyHoverer(
+            hovererTextElement,
+            hovererTextElement.getAttribute('data-hoverer-text'),
+            (
+                JSON.parse( hovererTextElement.getAttribute('data-hoverer-options') ) || {}
+            )
+        );
     }
+
     const hovererInferElements = document.querySelectorAll('[data-hoverer-infer]');
     for (let i = 0; i < hovererInferElements.length; i++) {
         const hovererInferElement = hovererInferElements[i];
         const hovererInferValue = hovererInferElement.getAttribute('data-hoverer-infer');
+        const hovererOptions = JSON.parse( hovererInferElement.getAttribute('data-hoverer-options') ) || {};
         if (hovererInferValue == 'auto') {
             if (hovererInferElement.tagName == 'IMG'||hovererInferElement.tagName == 'VIDEO') {
                 applyHoverer(
@@ -102,7 +139,8 @@ const {applyHoverer,setHovererGlobalOptions} = (function(){
                     hovererInferElement.alt||
                     hovererInferElement.src||
                     hovererInferElement.ariaLabel||
-                    hovererInferElement.innerText
+                    hovererInferElement.innerText,
+                    hovererOptions
                 );
             }
             else if (hovererInferElement.tagName == 'A') {
@@ -110,22 +148,26 @@ const {applyHoverer,setHovererGlobalOptions} = (function(){
                     hovererInferElement,
                     hovererInferElement.href||
                     hovererInferElement.ariaLabel||
-                    hovererInferElement.innerText
+                    hovererInferElement.innerText,
+                    hovererOptions
                 );
             }
             else {
                 applyHoverer(
                     hovererInferElement,
                     hovererInferElement.ariaLabel||
-                    hovererInferElement.innerText
+                    hovererInferElement.innerText,
+                    hovererOptions
                 );
             }
         }
         else {
             applyHoverer(
                 hovererInferElement,
-                hovererInferElement[hovererInferValue]
+                hovererInferElement[hovererInferValue],
+                hovererOptions
             );
         }
     }
-})();
+}
+)
