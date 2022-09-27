@@ -2,15 +2,23 @@ const {applyHoverer,setHovererGlobalOptions} = (function(){
     /**
      * @typedef {Object} options - options for the behavior and look of hoverer.
      * @property {number} [size] - The size of the text box.
+     * @property {string} [textColor] - The color of the text of the text box.
+     * @property {string} [outlineColor] - The color of the outline of the text box.
+     * @property {string} [background] - The background of the text box, this is the same as the CSS background property, so you could use things like url("") and linier-gradient().
+     * @property {string} [font] - The font family of the text in the text box.
      * @property {number} [delay] - The amount of secondes between when the mouse hovers over the element and when the text box appears.
      * @property {number} [transition] - The time it take to transition between it's visible and invisible states.
-     * @property {string} [style] - A string containing css styles that will be applied to the text box.
+     * @property {string} [style] - A string containing css styles that will be applied to the text box, this can be used to achieve effects that are not available through the other options.
      */
     /**
      * @type {options}
      */
     const defaultOptions = {
         size:0.7,
+        textColor:'black',
+        outlineColor:'grey',
+        background:'white',
+        font:'sans-serif',
         delay:0.5,
         transition:0,
         style:''
@@ -45,12 +53,18 @@ const {applyHoverer,setHovererGlobalOptions} = (function(){
         textElement.style = ''+
         'position:absolute;'+
         'opacity:0;'+
-        'background:white;'+
-        'border: 0.1em solid grey;'+
+        'color:'+(options.textColor||defaultOptions.textColor)+';'+
+        'background:'+(options.background||defaultOptions.background)+';'+
+        'border: 0.1em solid '+(options.outlineColor||defaultOptions.outlineColor)+';'+
         'padding: 0.45em;'+
         'font-family: sans-serif;'+
         'font-size: '+(options.size||defaultOptions.size)+'em;'+
-        'transition: all '+oneLineIf(options.transition!=undefined,options.transition,defaultOptions.transition)+'s;'+
+        'transition: all '+oneLineIf(
+            options.transition!=undefined,
+            options.transition,
+            defaultOptions.transition
+        )+'s;'+
+        'z-index:2'+
         (options.style||defaultOptions.style);
         document.body.appendChild(textElement);
     
@@ -111,6 +125,7 @@ function(){
         setHovererGlobalOptions(
             JSON.parse(
                 hovererGlobalOptions.getAttribute('data-hoverer-global-options')
+                || '{}'
             )
         )
     }
@@ -122,7 +137,10 @@ function(){
             hovererTextElement,
             hovererTextElement.getAttribute('data-hoverer-text'),
             (
-                JSON.parse( hovererTextElement.getAttribute('data-hoverer-options') ) || {}
+                JSON.parse(
+                    hovererTextElement.getAttribute('data-hoverer-options')
+                    || '{}'
+                )
             )
         );
     }

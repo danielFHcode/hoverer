@@ -1,5 +1,9 @@
 # Hoverer
 
+[![License](https://img.shields.io/badge/license-ISC-blue.svg)](https://github.com/probot/template/blob/master/LICENSE)
+[![NPM](https://img.shields.io/badge/npm-v2.0.0-blue.svg)](https://www.npmjs.com/package/hoverer/v/2.0.0-beta.1)
+[![Gitter](https://img.shields.io/badge/chat-on%20gitter-brightgreen)](https://gitter.im/hoverer-js/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 ## About
 
 Hoverer is a library for creating a text box which displays additional information that appears upon hovering on top of an HTML element.
