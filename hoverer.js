@@ -6,6 +6,9 @@ const {applyHoverer,setHovererGlobalOptions} = (function(){
      * @property {string} [outlineColor] - The color of the outline of the text box.
      * @property {string} [background] - The background of the text box, this is the same as the CSS background property, so you could use things like url("") and linier-gradient().
      * @property {string} [font] - The font family of the text in the text box.
+     * @property {'static'|'mouse'} [positioningType] - How the text box can be positioned, it can be equal one of few strings:
+     ** 'static' - Means that the text box is always at the bottom left corner of the element.
+     ** 'mouse' - Means that the text box is in the position of the mouse when it enters the element.
      * @property {number} [delay] - The amount of secondes between when the mouse hovers over the element and when the text box appears.
      * @property {number} [transition] - The time it take to transition between it's visible and invisible states.
      * @property {string} [style] - A string containing css styles that will be applied to the text box, this can be used to achieve effects that are not available through the other options.
@@ -19,6 +22,7 @@ const {applyHoverer,setHovererGlobalOptions} = (function(){
         outlineColor:'grey',
         background:'white',
         font:'sans-serif',
+        positioningType:'mouse',
         delay:0.5,
         transition:0,
         style:''
@@ -75,7 +79,20 @@ const {applyHoverer,setHovererGlobalOptions} = (function(){
             isMouseOver = true;
             setTimeout(function(){
                 if (!isMouseOver) return;
-                const elementTrans = getTextBoxTrans(element);
+                let elementTrans;
+                const positioningType = options.positioningType || defaultOptions.positioningType;
+                if (positioningType == 'mouse') {
+                    elementTrans = getTextBoxTrans(element);
+                }
+                else if (positioningType == 'static') {
+                    elementTrans = {
+                        x:e.clientX,
+                        y:e.clientY
+                    };
+                }
+                else {
+                    throw new Error('Can not position text box with positioning type of '+"'"+positioningType+"'"+' because no such type exits');
+                }
                 textElement.style.left = elementTrans.x+'px';
                 textElement.style.top = elementTrans.y+'px';
                 textElement.style.opacity = 1;
