@@ -1,12 +1,19 @@
 {
   "name": "hoverer",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.3",
   "description": "make text appear on hover",
   "main": "hoverer.js",
-  "scripts": {},
+  "scripts": {
+    "build": "node build/gen",
+    "watch-build": "node build/watch"
+  },
   "author": "Daniel F.H.",
   "license": "ISC",
-  "keywords": ["hover","text box","JavaScript"],
+  "keywords": [
+    "hover",
+    "text box",
+    "JavaScript"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/danielFHcode/hoverer.git"
@@ -14,5 +21,9 @@
   "bugs": {
     "url": "https://github.com/danielFHcode/hoverer/issues"
   },
-  "homepage": "https://github.com/danielFHcode/hoverer#readme"
+  "homepage": "https://github.com/danielFHcode/hoverer#readme",
+  "devDependencies": {
+    "@babel/core": "^7.20.5",
+    "@babel/preset-env": "^7.20.2"
+  }
 }
