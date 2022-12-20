@@ -118,7 +118,7 @@ export function apply(
     }
 }
 
-export default {applyHoverer, defaultOptions};
+export default {apply, defaultOptions};
 
 window.addEventListener('load',
 function(){
@@ -135,7 +135,7 @@ function(){
     const hovererTextElements = document.querySelectorAll('[data-hoverer-text]');
     for (let i = 0; i < hovererTextElements.length; i++) {
         const hovererTextElement = hovererTextElements[i];
-        applyHoverer(
+        apply(
             hovererTextElement,
             hovererTextElement.getAttribute('data-hoverer-text'),
             (
@@ -154,7 +154,7 @@ function(){
         const hovererOptions = JSON.parse( hovererInferElement.getAttribute('data-hoverer-options') ) || {};
         if (hovererInferValue == 'auto') {
             if (hovererInferElement.tagName == 'IMG'||hovererInferElement.tagName == 'VIDEO') {
-                applyHoverer(
+                apply(
                     hovererInferElement,
                     hovererInferElement.alt||
                     hovererInferElement.src||
@@ -164,7 +164,7 @@ function(){
                 );
             }
             else if (hovererInferElement.tagName == 'A') {
-                applyHoverer(
+                apply(
                     hovererInferElement,
                     hovererInferElement.href||
                     hovererInferElement.ariaLabel||
@@ -173,7 +173,7 @@ function(){
                 );
             }
             else {
-                applyHoverer(
+                apply(
                     hovererInferElement,
                     hovererInferElement.ariaLabel||
                     hovererInferElement.innerText,
@@ -182,7 +182,7 @@ function(){
             }
         }
         else {
-            applyHoverer(
+            apply(
                 hovererInferElement,
                 hovererInferElement[hovererInferValue],
                 hovererOptions
