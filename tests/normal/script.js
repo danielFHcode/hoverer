@@ -1,0 +1,3 @@
+hoverer.setHovererGlobalOptions({
+    textColor:'red'
+})

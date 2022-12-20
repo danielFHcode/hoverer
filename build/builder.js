@@ -30,7 +30,7 @@ const processFuncs = {
                     "modules": "umd"
                 }
             ]],
-            moduleId: "hoverer"
+            filename: "hoverer.js"
         });
         return processedFile.code;
     },
@@ -44,7 +44,7 @@ const processFuncs = {
                     "modules": "umd"
                 }
             ]],
-            moduleId: "hoverer",
+            filename: "hoverer.js",
             generatorOpts: {
                 comments: false
             },
@@ -61,8 +61,7 @@ const processFuncs = {
                     "targets": "<0.25%, not dead",
                     "modules": false
                 }
-            ]],
-            "moduleId": "hoverer"
+            ]]
         });
         return processedFile.code;
     }

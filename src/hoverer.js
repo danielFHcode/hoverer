@@ -56,7 +56,7 @@ export function applyHoverer(
     textElement.style = `
     position: absolute;
     opacity: 0;
-    color: ${options.textColor||defaultOptions.textColor}+';'+
+    color: ${options.textColor||defaultOptions.textColor};
     background: ${options.background||defaultOptions.background};
     border: 0.1em solid ${options.outlineColor||defaultOptions.outlineColor};
     padding: 0.45em;
