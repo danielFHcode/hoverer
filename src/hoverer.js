@@ -7,15 +7,16 @@
  * @property {string} [font] - The font family of the text in the text box.
  * @property {'static'|'mouse'} [positioningType] - How the text box can be positioned, it can be equal one of few strings:
  ** 'static' - Means that the text box is always at the bottom left corner of the element.
-    ** 'mouse' - Means that the text box is in the position of the mouse when it enters the element.
-    * @property {number} [delay] - The amount of secondes between when the mouse hovers over the element and when the text box appears.
-    * @property {number} [transition] - The time it take to transition between it's visible and invisible states.
-    * @property {string} [style] - A string containing css styles that will be applied to the text box, this can be used to achieve effects that are not available through the other options.
-    */
+ ** 'mouse' - Means that the text box is in the position of the mouse when it enters the element.
+ * @property {number} [delay] - The amount of secondes between when the mouse hovers over the element and when the text box appears.
+ * @property {number} [transition] - The time it take to transition between it's visible and invisible states.
+ * @property {string} [style] - A string containing css styles that will be applied to the text box, this can be used to achieve effects that are not available through the other options.
+ */
+
 /**
  * @type {options}
  */
-const defaultOptions = {
+export const defaultOptions = {
     size:0.7,
     textColor:'black',
     outlineColor:'grey',
@@ -28,23 +29,12 @@ const defaultOptions = {
 };
 
 /**
- * Sets the default options for hoverer.
- * @param {options} options - options for the behavior and look of hoverer.
- */
-export function setHovererGlobalOptions(options){
-    for (let i in options){
-        if (defaultOptions[i]==null) continue;
-        defaultOptions[i] = options[i];
-    }
-}
-
-/**
  * Shows text box on hover
  * @param {HTMLElement} element - The element which has hoverer applied to it.
  * @param {string} text - The text that appears in the text box.
  * @param {options} options - options for the behavior and look of hoverer.
  */
-export function applyHoverer(
+export function apply(
     element,
     text,
     options = defaultOptions
@@ -62,11 +52,11 @@ export function applyHoverer(
     padding: 0.45em;
     font-family: sans-serif;
     font-size: ${options.size||defaultOptions.size}em;
-    transition: all ${oneLineIf(
-        options.transition!=undefined,
-        options.transition,
+    transition: all ${
+        options.transition != undefined ?
+        options.transition :
         defaultOptions.transition
-    )}s;
+    }s;
     z-index:2;
     ${options.style||defaultOptions.style}
     `;
@@ -96,9 +86,9 @@ export function applyHoverer(
             textElement.style.left = elementTrans.x+'px';
             textElement.style.top = elementTrans.y+'px';
             textElement.style.opacity = 1;
-        }, oneLineIf(
-            options.delay!=undefined,
-            options.delay,
+        }, (
+            options.delay!=undefined ?
+            options.delay :
             defaultOptions.delay
         )*1000);
     })
@@ -107,9 +97,9 @@ export function applyHoverer(
         setTimeout(function(){
             if (isMouseOver) return;
             textElement.hidden = true;
-        }, oneLineIf(
-            options.transition!=undefined,
-            options.transition,
+        }, (
+            options.transition!=undefined ?
+            options.transition :
             defaultOptions.transition
         )*1000)
         isMouseOver = false;
@@ -126,14 +116,9 @@ export function applyHoverer(
             y:boundingClientRect.bottom+window.scrollY+5
         }
     }
-
-    function oneLineIf(bool,x,y){
-        if (bool) return x;
-        return y;
-    }
 }
 
-export default {applyHoverer, setHovererGlobalOptions}
+export default {applyHoverer, defaultOptions};
 
 window.addEventListener('load',
 function(){
