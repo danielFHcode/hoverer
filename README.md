@@ -15,7 +15,7 @@ Hoverer is a library for creating a text box which displays additional informati
 To install you can either use npm:
 
 ```console
-npm i hoverer@2.0.0-beta.0
+npm i hoverer@2.0.0-beta
 ```
 
 Or just download the one file from github.
@@ -35,7 +35,7 @@ To apply the hoverer effect to an element you can use one of 2 methods:
 1.  Through js using the `applyHoverer` function:
 
     ```js
-    applyHoverer(myElement, "some text");
+    hoverer.apply(myElement, "some text");
 
     // Results in a text box saying 'some text' that shows up when the mouse hovers over `myElement`.
     ```
@@ -77,7 +77,7 @@ To apply the hoverer effect to an element you can use one of 2 methods:
         To set the hoverer options of an element when using the `applyHoverer` javaScript function, you can simply pass in an options object:
 
         ```js
-        applyHoverer(element, "piece of text", {
+        hoverer.apply(element, "piece of text", {
           /*options object*/
         });
         ```
@@ -106,9 +106,7 @@ To apply the hoverer effect to an element you can use one of 2 methods:
         - with javaScript:
 
           ```js
-          setHovererGlobalOptions({
-            /*options*/
-          });
+          hoverer.defaultOptions.someOption = 'value';
           ```
 
         - with HTML:
@@ -136,19 +134,15 @@ To customize you can use (as usual) either data attributes:
 Or js:
 
 ```js
-applyHoverer(element, "piece of text", {
+hoverer.apply(element, "piece of text", {
   /*options*/
 });
 
 // or
 
-setHovererGlobalOptions({
-  /*options*/
-});
+hoverer.defaultOptions.someOption = 'value';
 ```
 
 For more details you can check out the [Usage](#usage) section.
 
 We do understand that some people may prefer to use older versions without the customization options to reduce unneeded bundle size, and because of that we want to make it clear that we will still be updating versions `1.x`.
-
-In addition we also wan't you to know that although version `2.0.0` is going to be a big release, all `2.x` releases are planed to be backwards compatible with all previous and upcoming `1.x` versions.
